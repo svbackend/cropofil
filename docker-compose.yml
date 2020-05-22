@@ -6,16 +6,25 @@ services:
   memcached:
     image: memcached:1.6-alpine
     container_name: cropofil-memcached
+    working_dir: /application
+    volumes:
+      - .:/application
 
   redis:
     image: redis:6.0-alpine
     container_name: cropofil-redis
+    working_dir: /application
+    volumes:
+      - .:/application
 
   nodejs:
     image: node:14.3-alpine
     container_name: cropofil-nodejs
     tty: true
     stdin_open: true
+    working_dir: /application
+    volumes:
+      - .:/application
 
   postgres:
     image: postgres:11.1-alpine

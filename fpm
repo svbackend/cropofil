@@ -1,2 +1,0 @@
-#!/bin/bash
-docker exec -it -u $(id -u):$(id -g) cropofil-php-fpm "$@"

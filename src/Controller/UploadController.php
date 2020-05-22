@@ -2,31 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UploadController extends AbstractController
+class UploadController extends BaseController
 {
     /**
-     * @Route("/", name="upload")
+     * @Route("/", name="app_home")
      */
-    public function index()
+    public function index(): Response
     {
-        $test = 1;
-        $test2 = 2;
-
-        $this->someMethod($test, $test2);
-
-        return $this->render('upload/index.html.twig', [
-            'controller_name' => 'UploadController',
-        ]);
-    }
-
-    //xdebug test
-    public function someMethod(int $one, int $two): int
-    {
-        $f = fn ($o, $t)
-            => $o + $t;
-        return  $one + $two + $f(1, 2);
+        return $this->render('home/index.html.twig');
     }
 }
