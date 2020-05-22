@@ -5,3 +5,10 @@ flysystem:
             adapter: 'local'
             options:
                 directory: '%kernel.project_dir%//storage/default'
+
+        aws.storage:
+            adapter: 'aws'
+            options:
+                client: Aws\S3\S3Client
+                bucket: 'cropofil'
+                prefix: '%env(APP_ENV)%'
