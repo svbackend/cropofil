@@ -43,16 +43,18 @@ class UploadController extends BaseController
      */
     public function uploadPhoto(Request $request, Gallery $gallery, PhotoUploader $uploader): JsonResponse
     {
-
-
-        /** @var UploadedFile[] $file */
+        /** @var UploadedFile[] $photos */
         $photos = $request->files->get('photos');
 
+        $result = [];
         foreach ($photos as $photo) {
             if ($photo->isValid()) {
-                $uploader->upload($photo, $gallery);
+                $photoUpload = $uploader->upload($photo, $gallery);
+
+                if ($photoUpload->isSuccess) {
+                    $result[] = $photoUpload;
+                }
             }
         }
-
     }
 }

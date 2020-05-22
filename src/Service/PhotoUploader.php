@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Data\PhotoUpload;
 use App\Entity\Gallery;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\FilesystemInterface;
@@ -18,14 +19,16 @@ class PhotoUploader
         $this->fs = $awsStorage;
     }
 
-    public function upload(UploadedFile $photo, Gallery $gallery)
+    public function upload(UploadedFile $photo, Gallery $gallery): PhotoUpload
     {
-        $result = $this->fs->write('hello.txt', 'Hello World!');
+        $path = sprintf('%s/%s.%s', $gallery->id, uniqid('', true), $photo->getClientOriginalExtension());
 
         $stream = fopen($photo->getRealPath(), 'rb+');
-        $this->fs->writeStream('uploads/'.$file->getClientOriginalName(), $stream, [
+        $this->fs->writeStream($path, $stream, [
             'visibility' => AdapterInterface::VISIBILITY_PUBLIC
         ]);
         fclose($stream);
+
+        return PhotoUpload::success();
     }
 }
