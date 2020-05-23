@@ -29,6 +29,16 @@ class MetadataReader
             $exif = [];
         }
 
+        try {
+            // todo needed to catch error before doctrine. But in general should be fixed in more correct way
+            json_encode($exif, JSON_THROW_ON_ERROR);
+        } catch (\JsonException $e) {
+            $exif = [
+                'exception' => $e->getMessage(),
+                'data' => var_export($exif, true)
+            ];
+        }
+
         return new Exif($exif);
     }
 
