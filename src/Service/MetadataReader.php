@@ -35,7 +35,6 @@ class MetadataReader
         } catch (\JsonException $e) {
             $exif = [
                 'exception' => $e->getMessage(),
-                'data' => var_export($exif, true)
             ];
         }
 
