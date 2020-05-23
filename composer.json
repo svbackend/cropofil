@@ -5,6 +5,7 @@
         "php": "^7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-json": "*",
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem-bundle": "^1.5",
         "ramsey/uuid": "^4.0",

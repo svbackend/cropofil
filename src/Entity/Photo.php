@@ -12,7 +12,7 @@ class Photo
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @ORM\Column(type="integer")
      */
     public ?int $id;
@@ -23,17 +23,17 @@ class Photo
     public Gallery $gallery;
 
     /**
-     * @ORM\Embedded()
+     * @ORM\Embedded(class=Filename::class, columnPrefix="client_")
      */
     public Filename $clientFilename;
 
     /**
-     * @ORM\Embedded()
+     * @ORM\Embedded(class=Filename::class, columnPrefix=false)
      */
     public Filename $filename;
 
     /**
-     * @ORM\Embedded()
+     * @ORM\Embedded(class=Metadata::class, columnPrefix=false)
      */
     public Metadata $metadata;
 

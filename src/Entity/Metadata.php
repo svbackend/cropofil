@@ -10,12 +10,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Metadata
 {
     /**
-     * @ORM\Embedded()
+     * @ORM\Embedded(class=Exif::class, columnPrefix=false)
      */
     public Exif $exif;
 
     /**
-     * @ORM\Embedded()
+     * @ORM\Embedded(class=Resolution::class, columnPrefix=false)
      */
     public Resolution $resolution;
 

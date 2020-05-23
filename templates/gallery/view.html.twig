@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Share Photos{% endblock %}
+
+{% block body %}
+    <a href="#!">Download All</a>
+
+    {% for photo in photos %}
+        <p>{{ photo.id }}</p>
+        <p>{{ photo.w }}</p>
+        <p>{{ photo.h }}</p>
+        <p>{{ photo.filename }}</p>
+        <p>{{ photo.client_filename }}</p>
+    {% else %}
+        <p>No Photos.</p>
+    {% endfor %}
+{% endblock %}

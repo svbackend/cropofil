@@ -3,8 +3,19 @@
 {% block title %}Share Photos{% endblock %}
 
 {% block body %}
-    <h1>Cropofil<br><span class="subheading">Share photos in original quality and resolution</span></h1>
 
     <p>Upload your photos:</p>
 
+    <form enctype="multipart/form-data" id="upload-photos-form" method="post" action="{{ path('app_gallery_upload') }}">
+        <label>
+            <input name="photos[]" type="file" multiple="multiple" accept="image/jpg, image/jpeg, image/png">
+        </label>
+        <p>After uploading - you will get short link to gallery with your photos</p>
+        <p>
+            <button>Submit</button>
+        </p>
+    </form>
+
 {% endblock %}
+
+
