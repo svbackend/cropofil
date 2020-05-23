@@ -3,15 +3,28 @@
 {% block title %}Share Photos{% endblock %}
 
 {% block body %}
-    <a href="#!">Download All</a>
+    <a href="#!">Download All (zip)</a>
 
-    {% for photo in photos %}
-        <p>{{ photo.id }}</p>
-        <p>{{ photo.w }}</p>
-        <p>{{ photo.h }}</p>
-        <p>{{ photo.filename }}</p>
-        <p>{{ photo.client_filename }}</p>
-    {% else %}
-        <p>No Photos.</p>
-    {% endfor %}
+    <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+        {% for photo in photos %}
+            <figure class="ps-figure" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                <a href="{{ photo.url }}" itemprop="contentUrl" data-size="{{ photo.w }}x{{ photo.h }}">
+                    <img class="ps-preview-img" src="{{ photo.url }}" itemprop="thumbnail" alt="" />
+                </a>
+                <figcaption itemprop="caption description">{{ photo.client_filename }}</figcaption>
+            </figure>
+        {% else %}
+            <p>No Photos.</p>
+        {% endfor %}
+    </div>
+
+    {{ include('_photoswipe.html.twig') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('viewGallery') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('viewGallery') }}
 {% endblock %}

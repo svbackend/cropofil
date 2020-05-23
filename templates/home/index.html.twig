@@ -8,7 +8,7 @@
 
     <form enctype="multipart/form-data" id="upload-photos-form" method="post" action="{{ path('app_gallery_upload') }}">
         <label>
-            <input name="photos[]" type="file" multiple="multiple" accept="image/jpg, image/jpeg, image/png">
+            <input name="photos[]" type="file" accept="image/jpg, image/jpeg, image/png" multiple required>
         </label>
         <p>After uploading - you will get short link to gallery with your photos</p>
         <p>

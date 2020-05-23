@@ -4,6 +4,7 @@
 namespace App\Service;
 
 use App\Exception\GalleryNotFound;
+use App\Utils\PhotoUrl;
 use Doctrine\DBAL\Connection;
 
 class GalleryFetcher
@@ -33,12 +34,12 @@ class GalleryFetcher
             ':gallery_id' => $galleryId
         ]);
 
-        return array_map([$this, 'mapPhoto'], $photos);
+        return array_map(fn (array $photo) => $this->mapPhoto($shortcut, $photo), $photos);
     }
 
-    private function mapPhoto(array $photo): array
+    private function mapPhoto(string $shortcut, array $photo): array
     {
-        $photo['filename'] = sprintf('%s/%s', '', $photo['filename']);
+        $photo['url'] = PhotoUrl::getUrl($shortcut, $photo['filename']);
         try {
             $photo['exif'] = json_decode($photo['exif'], true, 512, JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {

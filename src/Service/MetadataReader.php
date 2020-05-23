@@ -23,12 +23,19 @@ class MetadataReader
     // todo
     public function getExif(string $path): Exif
     {
-        return new Exif([]);
+        try {
+            $exif = exif_read_data($path);
+        } catch (\ErrorException $fileNotSupported) {
+            $exif = [];
+        }
+
+        return new Exif($exif);
     }
 
     // todo
     public function getResolution(string $path): Resolution
     {
-        return new Resolution(0,0);
+        [$w, $h] = getimagesize($path);
+        return new Resolution($w, $h);
     }
 }
