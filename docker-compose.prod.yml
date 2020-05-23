@@ -1,0 +1,50 @@
+version: "3.1"
+services:
+    memcached:
+        image: memcached:1.6-alpine
+        container_name: cropofil-memcached
+        restart: always
+
+    redis:
+        image: redis:6.0-alpine
+        container_name: cropofil-redis
+        restart: always
+
+    nodejs:
+        image: node:14.3-alpine
+        container_name: cropofil-nodejs
+        tty: true
+        stdin_open: true
+        working_dir: /application
+        volumes:
+            - .:/application
+
+    postgres:
+        image: postgres:11.1-alpine
+        container_name: cropofil-postgres
+        working_dir: /application
+        volumes:
+            - .:/application
+        env_file:
+            - ./phpdocker/.env.local
+        ports:
+            - "7074:5432"
+
+    webserver:
+        image: nginx:1.17-alpine
+        container_name: cropofil-webserver
+        working_dir: /application
+        volumes:
+            - .:/application
+            - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - "443:443"
+            - "80:80"
+
+    php-fpm:
+        build: phpdocker/php-fpm
+        container_name: cropofil-php-fpm
+        working_dir: /application
+        volumes:
+            - .:/application
+            - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
