@@ -30,11 +30,11 @@ class MetadataReader
         }
 
         try {
-            // todo needed to catch error before doctrine. But in general should be fixed in more correct way
             json_encode($exif, JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             $exif = [
-                'exception' => $e->getMessage(),
+                '__exception' => $e->getMessage(),
+                ...$this->fixEncoding($exif)
             ];
         }
 
@@ -46,5 +46,20 @@ class MetadataReader
     {
         [$w, $h] = getimagesize($path);
         return new Resolution($w, $h);
+    }
+
+    private function fixEncoding(array $input): array
+    {
+        $result = [];
+
+        foreach ($input as $key => $value) {
+            if (is_array($value)) {
+                $result[$key] = $this->fixEncoding($value);
+            } else {
+                $result[$key] = utf8_encode($value);
+            }
+        }
+
+        return $result;
     }
 }
