@@ -3,7 +3,7 @@
 {% block title %}Share Photos{% endblock %}
 
 {% block body %}
-    <a href="#!">Download All (zip)</a>
+    <a href="{{ path('app_home') }}">Upload your photos</a>
 
     <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery">
         {% for photo in photos %}
