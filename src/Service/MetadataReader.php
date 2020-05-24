@@ -32,10 +32,7 @@ class MetadataReader
         try {
             json_encode($exif, JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
-            $exif = [
-                '__exception' => $e->getMessage(),
-                ...$this->fixEncoding($exif)
-            ];
+            $exif = array_merge_recursive($this->fixEncoding($exif), ['__exception' => $e->getMessage()]);
         }
 
         return new Exif($exif);
