@@ -1,3 +1,5 @@
+import {copyToClipboard} from "./utils/clipboard";
+
 require('../css/viewGallery.scss');
 require('photoswipe/dist/photoswipe.css');
 require('photoswipe/dist/default-skin/default-skin.css');
@@ -210,3 +212,13 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
 // execute above function
 initPhotoSwipeFromDOM('.my-gallery');
+
+$("#copy-url-btn").on('click', function (e) {
+    e.preventDefault();
+    copyToClipboard(window.location);
+    let label = this.innerText;
+    this.innerText = 'Copied!';
+    setTimeout(() => {
+        this.innerText = label;
+    }, 2000);
+});

@@ -1,15 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% set shortcut = app.request.attributes.get('shortcut') %}
 {% set photosNb = photos|length %}
 {% set photosWord = photosNb == 1 ? 'photo' : 'photos' %}
-{% set h1 = 'Gallery ' ~ app.request.attributes.get('shortcut') ~ ' (' ~ photosNb ~ ' ' ~ photosWord ~ ')' %}
+{% set h1 = 'Gallery ' ~ shortcut ~ ' (' ~ photosNb ~ ' ' ~ photosWord ~ ')' %}
 {% set firstPhoto = photos|first %}
 
 {% block title %}{{ h1 }}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_home') }}">Upload your photos</a>
-
+    <p>
+        <a href="{{ path('app_home') }}">Upload your photos</a>
+    </p>
+    <p>
+        <a href="#!" id="copy-url-btn">{{ url('app_gallery_view', {'shortcut': shortcut}) }} - click to copy</a>
+    </p>
     <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery">
         {% for photo in photos %}
             <figure class="ps-figure" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
