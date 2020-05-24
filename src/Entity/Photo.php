@@ -44,4 +44,19 @@ class Photo
         $this->filename = $filename;
         $this->metadata = $metadata;
     }
+
+    /**
+     * 1 or 3 === horizontal
+     * 6 or 8 === vertical
+     * https://www.impulseadventure.com/photo/exif-orientation.html
+     */
+    public function isHorizontal(): bool
+    {
+        $exif = $this->metadata->exif->exif;
+        if (!isset($exif['Orientation'])) {
+            return true;
+        }
+
+        return $exif['Orientation'] === '1' || $exif['Orientation'] === '3';
+    }
 }

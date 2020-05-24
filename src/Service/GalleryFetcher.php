@@ -3,6 +3,7 @@
 
 namespace App\Service;
 
+use App\Entity\Photo;
 use App\Exception\GalleryNotFound;
 use App\Utils\PhotoUrl;
 use Doctrine\DBAL\Connection;
@@ -42,7 +43,15 @@ class GalleryFetcher
         $photo['url'] = PhotoUrl::getUrl($shortcut, $photo['filename']);
         try {
             $photo['exif'] = json_decode($photo['exif'], true, 512, JSON_THROW_ON_ERROR);
+
+            /** @see Photo::isHorizontal() */
+            $orientation = $photo['exif']['Orientation'] ?? '1';
+            if (in_array($orientation, ['6', '8'], true)) {
+                [$photo['h'], $photo['w']] = [$photo['w'], $photo['h']];
+            }
+
         } catch (\JsonException $e) {
+            // todo log
             $photo['exif'] = [];
         }
 

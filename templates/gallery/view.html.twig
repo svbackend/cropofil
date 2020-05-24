@@ -12,6 +12,8 @@
 
     <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery">
         {% for photo in photos %}
+            {% set exif = photo.exif|json_decore %}
+            {% set isHorizontal = exif['Orientation'] %}
             <figure class="ps-figure" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
                 <a href="{{ photo.url }}" itemprop="contentUrl" data-size="{{ photo.w }}x{{ photo.h }}">
                     <img class="ps-preview-img" src="{{ photo.url }}" itemprop="thumbnail" alt="" />
