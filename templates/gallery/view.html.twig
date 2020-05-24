@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Share Photos{% endblock %}
+{% set photosNb = photos|length %}
+{% set photosWord = photosNb == 1 ? 'photo' : 'photos' %}
+{% set h1 = 'Gallery ' ~ app.request.attributes.get('shortcut') ~ ' (' ~ photosNb ~ ' ' ~ photosWord ~ ')' %}
+{% set firstPhoto = photos|first %}
+
+{% block title %}{{ h1 }}{% endblock %}
 
 {% block body %}
     <a href="{{ path('app_home') }}">Upload your photos</a>
@@ -27,4 +32,21 @@
 
 {% block javascripts %}
     {{ encore_entry_script_tags('viewGallery') }}
+{% endblock %}
+
+{% block head %}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ h1 }} - Cropofil">
+    <meta name="twitter:image" content="{{ firstPhoto.url }}">
+    <meta name="twitter:description" content="Cropofil - Share photos in original quality and resolution">
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="{{ h1 }} - Cropofil" />
+    <meta name="description" content="Share photos in original quality and resolution. Simple Free High Quality Photos Sharing.">
+    <meta name="keywords" content="HQ, Resolution, File Sharing, Photos Sharing">
+    <meta property="og:title" content="{{ h1 }} - Cropofil">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:image" content="{{ firstPhoto.url }}">
+    <meta property="og:image:secure_url" content="{{ firstPhoto.url }}">
+    <meta property="og:description" content="Share photos in original quality and resolution.">
 {% endblock %}

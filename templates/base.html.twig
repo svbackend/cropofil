@@ -9,6 +9,24 @@
     <title>{% block title %}{% endblock %} - Cropofil</title>
     {{ encore_entry_link_tags('app') }}
     {% block stylesheets %}{% endblock %}
+    {% block head %}
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="Cropofil">
+        {# <meta name="twitter:image" content="https://clearmortgagecapital.com/img/home_bg.png"> #}
+        <meta name="twitter:description" content="Share photos in original quality and resolution">
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:site_name" content="Cropofil" />
+        <meta name="description" content="Share photos in original quality and resolution. Simple Free High Quality Photos Sharing.">
+        <meta name="keywords" content="HQ, Resolution, File Sharing, Photos Sharing">
+        <meta property="og:title" content="Cropofil">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="/">
+
+        {# <meta property="og:image" content="https://clearmortgagecapital.com/img/home_bg.png"> #}
+        {# <meta property="og:image:secure_url" content="https://clearmortgagecapital.com/img/home_bg.png"> #}
+
+        <meta property="og:description" content="Share photos in original quality and resolution.">
+    {% endblock %}
 </head>
 <body>
 <h1><a href="{{ path('app_home') }}">Cropofil</a><br><span class="subheading">Share photos in original quality and resolution</span></h1>
