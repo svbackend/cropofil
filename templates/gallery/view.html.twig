@@ -11,10 +11,12 @@
 {% block body %}
     <p>
         <a href="{{ path('app_home') }}">Upload your photos</a>
-        | <a href="{{ path('app_gallery_download_all', {'shortcut': shortcut}) }}">Download All</a>
+        {% if photosNb > 1 %}
+            | <a href="{{ path('app_gallery_download_all', {'shortcut': shortcut}) }}">Download All (zip)</a>
+        {% endif %}
     </p>
     <p>
-        <a href="#!" id="copy-url-btn">{{ url('app_gallery_view', {'shortcut': shortcut}) }} - click to copy</a>
+        <a href="#!" id="copy-url-btn">cropofil.com/g/{{ shortcut }} - click to copy</a>
     </p>
     <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery">
         {% for photo in photos %}
