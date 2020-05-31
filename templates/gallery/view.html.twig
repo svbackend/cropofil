@@ -11,6 +11,7 @@
 {% block body %}
     <p>
         <a href="{{ path('app_home') }}">Upload your photos</a>
+        | <a href="{{ path('app_gallery_download_all', {'shortcut': shortcut}) }}">Download All</a>
     </p>
     <p>
         <a href="#!" id="copy-url-btn">{{ url('app_gallery_view', {'shortcut': shortcut}) }} - click to copy</a>
@@ -23,6 +24,11 @@
                 </a>
                 <figcaption itemprop="caption description">{{ photo.client_filename }}</figcaption>
             </figure>
+            {% if photo.exif is not empty %}
+                <a href="#!" data-target="exif-{{ photo.id }}" class="exif-toggle">Exif</a>
+                <pre class="exif-{{ photo.id }} d-none"><code>{{ photo.exif|json_encode(constant('JSON_PRETTY_PRINT'))|replace({"\\": ''}) }}</code></pre>
+            {% endif %}
+
         {% else %}
             <p>No Photos.</p>
         {% endfor %}

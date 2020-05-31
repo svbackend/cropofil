@@ -31,6 +31,10 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
             linkEl = figureEl.children[0]; // <a> element
 
+            if (!linkEl || !linkEl.getAttribute('data-size')) {
+                continue;
+            }
+
             size = linkEl.getAttribute('data-size').split('x');
 
             // create slide object
@@ -221,4 +225,10 @@ $("#copy-url-btn").on('click', function (e) {
     setTimeout(() => {
         this.innerText = label;
     }, 2000);
+});
+
+$(".exif-toggle").on('click', function (e) {
+    e.preventDefault();
+    let targetClass = $(this).data('target');
+    $(`.${targetClass}`).toggleClass('d-none');
 });
