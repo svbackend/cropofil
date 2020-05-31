@@ -26,7 +26,7 @@
             </figure>
             {% if photo.exif is not empty %}
                 <a href="#!" data-target="exif-{{ photo.id }}" class="exif-toggle">Exif</a>
-                <pre class="exif-{{ photo.id }} d-none"><code>{{ photo.exif|json_encode(constant('JSON_PRETTY_PRINT'))|replace({"\\": ''}) }}</code></pre>
+                <pre class="exif-{{ photo.id }} d-none exif"><code>{{ photo.exif|json_encode(constant('JSON_PRETTY_PRINT'))|replace({"\\": ''}) }}</code></pre>
             {% endif %}
 
         {% else %}
