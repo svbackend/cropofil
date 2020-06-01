@@ -84,6 +84,9 @@
     "egulias/email-validator": {
         "version": "2.1.17"
     },
+    "gumlet/php-image-resize": {
+        "version": "1.9.2"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.5.3"
     },

@@ -4,10 +4,11 @@
     "require": {
         "php": "^7.4",
         "ext-ctype": "*",
+        "ext-exif": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "ext-exif": "*",
         "ext-zip": "*",
+        "gumlet/php-image-resize": "^1.9",
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/flysystem-bundle": "^1.5",
         "ramsey/uuid": "^4.0",

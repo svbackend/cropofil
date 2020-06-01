@@ -38,6 +38,28 @@ class GalleryFetcher
         return array_map(fn (array $photo) => $this->mapPhoto($shortcut, $photo), $photos);
     }
 
+    public function fetchPhoto(string $shortcut, int $id): array
+    {
+        $galleryId = $this->conn->fetchColumn('SELECT id FROM gallery WHERE shortcut = :shortcut', [
+            ':shortcut' => $shortcut
+        ]);
+
+        if ($galleryId === false) {
+            throw new GalleryNotFound();
+        }
+
+        $photo = $this->conn->fetchAll('
+            SELECT id, client_filename, filename, exif, w, h 
+            FROM photo 
+            WHERE gallery_id = :gallery_id AND id = :id
+        ', [
+            ':gallery_id' => $galleryId,
+            ':id' => $id,
+        ])[0];
+
+        return $this->mapPhoto($shortcut, $photo);
+    }
+
     private function mapPhoto(string $shortcut, array $photo): array
     {
         $photo['url'] = PhotoUrl::getUrl($shortcut, $photo['filename']);
