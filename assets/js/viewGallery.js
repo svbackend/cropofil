@@ -12,7 +12,8 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     // parse slide data (url, title, size ...) from DOM elements
     // (children of gallerySelector)
     var parseThumbnailElements = function(el) {
-        var thumbElements = el.childNodes,
+        console.log(el.childNodes)
+        let thumbElements = el.childNodes,
             numNodes = thumbElements.length,
             items = [],
             figureEl,
@@ -20,7 +21,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             size,
             item;
 
-        for(var i = 0; i < numNodes; i++) {
+        for(let i = 0; i < numNodes; i++) {
 
             figureEl = thumbElements[i]; // <figure> element
 
@@ -43,8 +44,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
                 w: parseInt(size[0], 10),
                 h: parseInt(size[1], 10)
             };
-
-
 
             if(figureEl.children.length > 1) {
                 // <figcaption> content
@@ -148,6 +147,8 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             items;
 
         items = parseThumbnailElements(galleryElement);
+
+        console.log(items)
 
         // define options (if needed)
         options = {
