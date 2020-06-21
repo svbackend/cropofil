@@ -58,8 +58,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             items.push(item);
         }
 
-        console.log(items)
-
         return items;
     };
 
@@ -92,10 +90,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             nodeIndex = 0,
             index;
 
-
-        console.log("onThumbnailsClick")
-        console.log(clickedGallery)
-
         for (var i = 0; i < numChildNodes; i++) {
             if(childNodes[i].nodeType !== 1) {
                 continue;
@@ -105,10 +99,11 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
                 index = nodeIndex;
                 break;
             }
-            nodeIndex++;
-        }
 
-        console.log(index)
+            if (childNodes[i].tagName && childNodes[i].tagName.toUpperCase() === 'FIGURE') {
+                nodeIndex++;
+            }
+        }
 
         if(index >= 0) {
             // open PhotoSwipe if valid index found
@@ -206,17 +201,13 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     // loop through all gallery elements and bind events
     var galleryElements = document.querySelectorAll( gallerySelector );
 
-    console.log(galleryElements)
-
     for(var i = 0, l = galleryElements.length; i < l; i++) {
         galleryElements[i].setAttribute('data-pswp-uid', i+1);
         galleryElements[i].onclick = onThumbnailsClick;
-        console.log(i)
     }
 
     // Parse URL and open gallery if it contains #&pid=3&gid=1
     var hashData = photoswipeParseHash();
-    console.log(hashData)
     if(hashData.pid && hashData.gid) {
         openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
     }
