@@ -201,9 +201,12 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     // loop through all gallery elements and bind events
     var galleryElements = document.querySelectorAll( gallerySelector );
 
+    console.log(galleryElements)
+
     for(var i = 0, l = galleryElements.length; i < l; i++) {
         galleryElements[i].setAttribute('data-pswp-uid', i+1);
         galleryElements[i].onclick = onThumbnailsClick;
+        console.log(i)
     }
 
     // Parse URL and open gallery if it contains #&pid=3&gid=1
