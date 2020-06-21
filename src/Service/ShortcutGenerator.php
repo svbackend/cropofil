@@ -9,12 +9,11 @@ class ShortcutGenerator
     public function generateShortcut(): string
     {
         $allowedChars = [
-            ...range(0,9), ...range('A', 'Z'), ...range('a', 'z'),
-            '$', '-', '_', '.', '+', '!', '*', '(', ')', ','
+            ...range(0,9), ...range('A', 'Z'), ...range('a', 'z')
         ];
         $allowedCharsSize = count($allowedChars) - 1;
 
-        $length = random_int(6, 8); // todo
+        $length = random_int(4, 8); // todo
         $shortcut = [];
 
         for ($i = $length; $i > 0; $i--) {
