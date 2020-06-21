@@ -18,10 +18,10 @@
     <p>
         <a href="#!" id="copy-url-btn">cropofil.com/g/{{ shortcut }} - click to copy</a>
     </p>
-    <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+    <div class="my-gallery ps-gallery" itemscope itemtype="http://schema.org/ImageGallery" id="main-gallery">
         {% for photo in photos %}
             <figure class="ps-figure" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                <a href="{{ photo.url }}" itemprop="contentUrl" data-size="{{ photo.w }}x{{ photo.h }}">
+                <a href="{{ photo.url }}" itemprop="contentUrl" data-size="{{ photo.w }}x{{ photo.h }}" class="open-photo-btn">
                     <img class="ps-preview-img" src="{{ photo.url }}" itemprop="thumbnail" alt="" />
                 </a>
                 <figcaption itemprop="caption description">{{ photo.client_filename }}</figcaption>

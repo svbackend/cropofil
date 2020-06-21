@@ -12,7 +12,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
     // parse slide data (url, title, size ...) from DOM elements
     // (children of gallerySelector)
     var parseThumbnailElements = function(el) {
-        console.log(el.childNodes)
         let thumbElements = el.childNodes,
             numNodes = thumbElements.length,
             items = [],
@@ -59,6 +58,8 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             items.push(item);
         }
 
+        console.log(items)
+
         return items;
     };
 
@@ -91,6 +92,10 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             nodeIndex = 0,
             index;
 
+
+        console.log("onThumbnailsClick")
+        console.log(clickedGallery)
+
         for (var i = 0; i < numChildNodes; i++) {
             if(childNodes[i].nodeType !== 1) {
                 continue;
@@ -103,7 +108,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             nodeIndex++;
         }
 
-
+        console.log(index)
 
         if(index >= 0) {
             // open PhotoSwipe if valid index found
