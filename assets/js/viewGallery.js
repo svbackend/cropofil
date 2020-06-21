@@ -148,8 +148,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         items = parseThumbnailElements(galleryElement);
 
-        console.log(items)
-
         // define options (if needed)
         options = {
 
@@ -210,6 +208,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
     // Parse URL and open gallery if it contains #&pid=3&gid=1
     var hashData = photoswipeParseHash();
+    console.log(hashData)
     if(hashData.pid && hashData.gid) {
         openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
     }
