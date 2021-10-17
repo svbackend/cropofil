@@ -1,12 +1,20 @@
-version: "3.1"
+version: "3.7"
 services:
     memcached:
         image: memcached:1.6-alpine
         container_name: cropofil-memcached
+        networks:
+            - default
+        labels:
+            - "traefik.enable=false"
 
     redis:
         image: redis:6.0-alpine
         container_name: cropofil-redis
+        networks:
+            - default
+        labels:
+            - "traefik.enable=false"
 
     nodejs:
         image: node:14.3-alpine
@@ -16,6 +24,10 @@ services:
         working_dir: /application
         volumes:
             - .:/application
+        networks:
+            - default
+        labels:
+            - "traefik.enable=false"
 
     postgres:
         image: postgres:11.1-alpine
@@ -29,6 +41,10 @@ services:
             - POSTGRES_DB=cropofil
         ports:
             - "7074:5432"
+        networks:
+            - default
+        labels:
+            - "traefik.enable=false"
 
     webserver:
         image: nginx:1.17-alpine
@@ -37,8 +53,14 @@ services:
         volumes:
             - .:/application
             - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-        ports:
-            - "7070:80"
+        #ports:
+        #    - "7070:80"
+        labels:
+            - "traefik.http.routers.webserver-cropofil.rule=Host(`cropofil.localhost`)"
+            - "traefik.http.services.webserver-cropofil.loadbalancer.server.port=80"
+        networks:
+            - vps-traefik
+            - default
 
     php-fpm:
         build: phpdocker/php-fpm
@@ -47,3 +69,12 @@ services:
         volumes:
             - .:/application
             - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+        networks:
+            - default
+        labels:
+            - "traefik.enable=false"
+
+networks:
+    default:
+    vps-traefik:
+        external: true
