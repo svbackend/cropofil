@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.7"
 services:
     memcached:
         image: memcached:1.6-alpine
@@ -22,9 +22,8 @@ services:
     postgres:
         image: postgres:11.1-alpine
         container_name: cropofil-postgres
-        working_dir: /application
         volumes:
-            - .:/application
+            - cropofil-db:/var/lib/postgresql/data
         env_file:
             - ./phpdocker/.env.local
         ports:
@@ -37,14 +36,17 @@ services:
         volumes:
             - .:/application
             - ./phpdocker/nginx/nginx.prod.conf:/etc/nginx/conf.d/default.conf
-            - /etc/letsencrypt/live/cropofil.com/fullchain.pem:/etc/letsencrypt/live/cropofil.com/fullchain.pem
-            - /etc/letsencrypt/live/cropofil.com/privkey.pem:/etc/letsencrypt/live/cropofil.com/privkey.pem
-            - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-            - /etc/letsencrypt/renewal/cropofil.com.conf:/etc/letsencrypt/renewal/cropofil.com.conf
-            - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
-        ports:
-            - "443:443"
-            - "80:80"
+        expose:
+            - "80"
+        networks:
+            - vps-traefik
+            - default
+        labels:
+            - "traefik.docker.network=vps-traefik"
+            - "traefik.enable=true"
+            - "traefik.http.routers.cropofil.rule=Host(`cropofil.com`)"
+            - "traefik.http.routers.cropofil.entrypoints=websecure"
+            - "traefik.http.routers.cropofil.tls.certresolver=myresolver"
 
     php-fpm:
         build: phpdocker/php-fpm
@@ -53,3 +55,12 @@ services:
         volumes:
             - .:/application
             - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
+
+
+volumes:
+    cropofil-db:
+
+networks:
+    default:
+    vps-traefik:
+        external: true
